@@ -1,0 +1,273 @@
+[gd_scene load_steps=6 format=3 uid="uid://dnlfwf7qkdkgn"]
+
+[ext_resource type="Script" path="res://scripts/ui/ui_controller.gd" id="1_controller"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.12, 0.15, 0.2, 0.92)
+border_width_top = 2
+border_color = Color(0.3, 0.5, 0.7, 0.6)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+content_margin_left = 20.0
+content_margin_top = 8.0
+content_margin_right = 20.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toggle"]
+bg_color = Color(0.2, 0.7, 0.3, 0.95)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 12.0
+content_margin_right = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toggle_hover"]
+bg_color = Color(0.3, 0.85, 0.4, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 12.0
+content_margin_right = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+bg_color = Color(0.22, 0.38, 0.55, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 14.0
+content_margin_top = 6.0
+content_margin_right = 14.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.35, 0.55, 0.75, 1.0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 14.0
+content_margin_top = 6.0
+content_margin_right = 14.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.4, 0.65, 0.85, 1.0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 14.0
+content_margin_top = 6.0
+content_margin_right = 14.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_small_btn"]
+bg_color = Color(0.25, 0.4, 0.55, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_small_hover"]
+bg_color = Color(0.35, 0.55, 0.7, 1.0)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1"]
+
+[node name="UIController" type="Control"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -120.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_controller")
+
+[node name="Panel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="PanelContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="ToggleButton" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_right = 50.0
+offset_bottom = 28.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_toggle")
+theme_override_styles/hover = SubResource("StyleBoxFlat_toggle_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_toggle_hover")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1")
+text = "^  Menu  ^"
+
+[node name="Content" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 40.0
+offset_right = -24.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="PerlinButton" type="Button" parent="Panel/Content"]
+custom_minimum_size = Vector2(85, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1")
+toggle_mode = true
+text = "Perlin"
+
+[node name="MidpointButton" type="Button" parent="Panel/Content"]
+custom_minimum_size = Vector2(85, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1")
+toggle_mode = true
+button_pressed = true
+text = "Midpoint"
+
+[node name="Sep1" type="VSeparator" parent="Panel/Content"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="GridSection" type="HBoxContainer" parent="Panel/Content"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 6
+
+[node name="GridTitle" type="Label" parent="Panel/Content/GridSection"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "Grid"
+
+[node name="GridDown" type="Button" parent="Panel/Content/GridSection"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_small_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_small_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_small_hover")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1")
+text = "<"
+
+[node name="GridLabel" type="Label" parent="Panel/Content/GridSection"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "129"
+horizontal_alignment = 1
+
+[node name="GridUp" type="Button" parent="Panel/Content/GridSection"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_small_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_small_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_small_hover")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1")
+text = ">"
+
+[node name="Sep2" type="VSeparator" parent="Panel/Content"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="SeedSection" type="HBoxContainer" parent="Panel/Content"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 6
+
+[node name="SeedTitle" type="Label" parent="Panel/Content/SeedSection"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "Seed"
+
+[node name="SeedLabel" type="Label" parent="Panel/Content/SeedSection"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "12345"
+horizontal_alignment = 1
+
+[node name="Sep3" type="VSeparator" parent="Panel/Content"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="GenerateButton" type="Button" parent="Panel/Content"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1")
+text = "Generate"
+
+[node name="ResetButton" type="Button" parent="Panel/Content"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1")
+text = "Flatten"

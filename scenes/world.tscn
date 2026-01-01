@@ -1,0 +1,122 @@
+[gd_scene load_steps=12 format=3 uid="uid://d18ry0bdurc82"]
+
+[ext_resource type="Script" uid="uid://c2i64aoch2cqr" path="res://scripts/world.gd" id="1_world"]
+[ext_resource type="PackedScene" path="res://ui/control.tscn" id="2_71j4m"]
+[ext_resource type="Script" uid="uid://ctfmy7sdd65u7" path="res://scripts/terrain/terrain_controller.gd" id="2_terrain"]
+[ext_resource type="Script" uid="uid://c3yedgqsb7pau" path="res://scripts/camera/orbit_camera.gd" id="3_camera"]
+[ext_resource type="Shader" uid="uid://c6x5mi8ywmjbf" path="res://shaders/water_toon.gdshader" id="4_water_shader"]
+
+[sub_resource type="StandardMaterial3D" id="ShaderMaterial_terrain"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 1
+alpha_antialiasing_edge = 0.3
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_water"]
+size = Vector2(2000, 2000)
+subdivide_width = 128
+subdivide_depth = 128
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_water"]
+render_priority = -1
+shader = ExtResource("4_water_shader")
+shader_parameter/WATER_COL = Color(0.04, 0.38, 0.88, 1)
+shader_parameter/WATER2_COL = Color(0.04, 0.35, 0.78, 1)
+shader_parameter/FOAM_COL = Color(0.8125, 0.9609, 0.9648, 1)
+shader_parameter/distortion_speed = 2.0
+shader_parameter/tile = Vector2(5, 5)
+shader_parameter/wave_speed = 2.0
+shader_parameter/wave_amplitude = 0.3
+shader_parameter/wave_frequency = 1.5
+shader_parameter/water_transparency = 0.85
+shader_parameter/water_depth_factor = 0.15
+shader_parameter/foam_width = 0.5
+shader_parameter/foam_edge_softness = 0.05
+shader_parameter/foam_distortion_speed = 0.5
+shader_parameter/foam_distortion_amount = 0.1
+shader_parameter/fade_start = 150.0
+shader_parameter/fade_end = 600.0
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1"]
+sky_top_color = Color(0.35, 0.55, 0.85, 1)
+sky_horizon_color = Color(0.65, 0.75, 0.88, 1)
+ground_bottom_color = Color(0.15, 0.2, 0.25, 1)
+ground_horizon_color = Color(0.65, 0.75, 0.88, 1)
+
+[sub_resource type="Sky" id="Sky_1"]
+sky_material = SubResource("ProceduralSkyMaterial_1")
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 2
+sky = SubResource("Sky_1")
+ambient_light_source = 3
+ambient_light_color = Color(0.6, 0.65, 0.7, 1)
+ambient_light_sky_contribution = 0.5
+ambient_light_energy = 0.4
+tonemap_mode = 2
+ssao_enabled = true
+ssao_radius = 1.5
+ssao_intensity = 1.0
+glow_enabled = true
+glow_intensity = 0.2
+glow_bloom = 0.05
+fog_enabled = true
+fog_light_color = Color(0.65, 0.75, 0.85, 1)
+fog_sun_scatter = 0.3
+fog_density = 0.001
+fog_sky_affect = 0.3
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_world")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 4
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="Terrain" type="Node3D" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("2_terrain")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Terrain"]
+material_override = SubResource("ShaderMaterial_terrain")
+
+[node name="Water" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+mesh = SubResource("PlaneMesh_water")
+surface_material_override/0 = SubResource("ShaderMaterial_water")
+
+[node name="OrbitCamera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 50, 80)
+current = true
+fov = 55.0
+script = ExtResource("3_camera")
+distance = 120.0
+height = 45.0
+rotation_speed = 0.12
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 20, 50, 20)
+light_color = Color(1, 0.98, 0.92, 1)
+light_energy = 1.2
+shadow_enabled = true
+shadow_blur = 1.5
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
+environment = SubResource("Environment_1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="UIController" parent="CanvasLayer" instance=ExtResource("2_71j4m")]
