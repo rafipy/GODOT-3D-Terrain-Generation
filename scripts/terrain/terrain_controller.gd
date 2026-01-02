@@ -14,26 +14,7 @@ enum MeshStyle { SMOOTH, BLOCKS }
 		if is_node_ready() and _generator:
 			generate_terrain()
 
-#@export var terrain_seed: int = 12345:
-	#set(value):
-		#terrain_seed = value
-		#GameSettings.terrain_seed = value
-		#if is_node_ready() and _generator:
-			#generate_terrain()
-
-#@export_group("Terrain Dimensions")
-#@export_range(17, 513, 16) var grid_size: int = 129:  # Grid resolution (vertices per side)
-	#set(value):
-		## Clamp to valid power-of-2 + 1 values
-		#var power := int(log(value - 1) / log(2))
-		#power = clampi(power, 4, 11)
-		#grid_size = (1 << power) + 1
-		#terrain_size = power
-		#GameSettings.terrain_size = power
-		#if is_node_ready() and _generator:
-			#generate_terrain()
-
-@export_range(0.1, 5.0, 0.1) var terrain_scale: float = 1.5:  # Horizontal scale
+@export_range(0.1, 5.0, 0.1) var terrain_scale: float = 1.5:
 	set(value):
 		terrain_scale = value
 		GameSettings.terrain_scale = value
@@ -42,7 +23,7 @@ enum MeshStyle { SMOOTH, BLOCKS }
 			_block_mesh_builder.terrain_scale = value
 			generate_terrain()
 
-@export_range(1.0, 100.0, 1.0) var height_scale: float = 25.0:  # Vertical scale
+@export_range(1.0, 100.0, 1.0) var height_scale: float = 25.0:
 	set(value):
 		height_scale = value
 		GameSettings.height_scale = value
@@ -52,7 +33,7 @@ enum MeshStyle { SMOOTH, BLOCKS }
 			generate_terrain()
 
 @export_group("Algorithm Settings")
-@export_range(0.3, 0.9, 0.01) var roughness: float = 0.65:  # Midpoint displacement roughness
+@export_range(0.3, 0.9, 0.01) var roughness: float = 0.65:
 	set(value):
 		roughness = value
 		GameSettings.md_roughness = value
@@ -84,34 +65,30 @@ var _island_mask: IslandMask
 var _smooth_mesh_builder: TerrainMeshBuilder
 var _block_mesh_builder: BlockMeshBuilder
 var _current_heightmap: PackedFloat32Array
+var _pending_heightmap: PackedFloat32Array 
+var _pending_grid_size: int = 0  
 
 
 func _ready() -> void:
 	_setup_components()
 	add_to_group("terrain")
 	GameSettings.settings_changed.connect(_on_settings_changed)
-	## Sync with GameSettings after components are set up
-	#terrain_seed = GameSettings.terrain_seed
-	#terrain_size = GameSettings.terrain_size
-	#grid_size = GameSettings.get_grid_size()  # Sync grid_size from terrain_size
-	#terrain_scale = GameSettings.terrain_scale
-	#height_scale = GameSettings.height_scale
-	#roughness = GameSettings.md_roughness
-	#island_inner_radius = GameSettings.island_inner_radius
-	#island_outer_radius = GameSettings.island_outer_radius
 	
 	if auto_generate:
 		generate_terrain()
 
+
 func force_generate():
-	generate_terrain()
+	"""Force regeneration and immediate mesh update (called by Refresh button)"""
+	generate_terrain(true)
+
 
 func _on_settings_changed() -> void:
 	set_algorithm()
-	if not GameSettings.auto_refresh:
-		return
+	
+	# Always generate data in background, but only update mesh if auto_refresh is on
+	generate_terrain(GameSettings.auto_refresh)
 
-	generate_terrain()
 	
 func _setup_components() -> void:
 	_generator = MidpointDisplacement.new()
@@ -136,7 +113,8 @@ func _setup_components() -> void:
 		add_child(mesh_instance)
 
 
-func generate_terrain() -> void:
+func generate_terrain(update_mesh: bool = true) -> void:
+	"""Generate terrain data. If update_mesh is false, only generate data without updating visual."""
 	var current_grid_size := GameSettings.get_grid_size()
 	var seed_value := GameSettings.terrain_seed
 	
@@ -149,34 +127,63 @@ func generate_terrain() -> void:
 	var raw_heightmap := _generator.generate(current_grid_size, seed_value)
 	
 	# Apply island mask ONLY to Midpoint Displacement
-	# Perlin noise should remain unmasked for full terrain variation
+	var generated_heightmap: PackedFloat32Array
 	if _generator is MidpointDisplacement:
-		_current_heightmap = _island_mask.apply(raw_heightmap, current_grid_size)
+		generated_heightmap = _island_mask.apply(raw_heightmap, current_grid_size)
 	else:
-		_current_heightmap = raw_heightmap
+		generated_heightmap = raw_heightmap
 	
+	var elapsed := Time.get_ticks_msec() - start_time
+	
+	if update_mesh:
+		# Apply immediately to mesh
+		_current_heightmap = generated_heightmap
+		_apply_heightmap_to_mesh(current_grid_size, elapsed)
+	else:
+		# Store for later application
+		_pending_heightmap = generated_heightmap
+		_pending_grid_size = current_grid_size
+		print("Terrain generated in background: %s, %dx%d grid, %.1fms (not applied to mesh)" % [
+			_generator.get_algorithm_name(),
+			current_grid_size, current_grid_size,
+			elapsed
+		])
+
+
+func apply_pending_terrain() -> void:
+	"""Apply the pending terrain data to the mesh (called when auto_refresh is turned on or Refresh is pressed)"""
+	if _pending_heightmap.size() > 0 and _pending_grid_size > 0:
+		_current_heightmap = _pending_heightmap
+		_apply_heightmap_to_mesh(_pending_grid_size, 0.0)
+		# Clear pending data
+		_pending_heightmap = PackedFloat32Array()
+		_pending_grid_size = 0
+		print("Applied pending terrain to mesh")
+
+
+func _apply_heightmap_to_mesh(grid_size: int, generation_time: float) -> void:
+	"""Build and apply mesh from current heightmap"""
 	# Choose mesh builder based on style and build mesh
 	var mesh: ArrayMesh
 	if mesh_style == MeshStyle.SMOOTH:
 		_smooth_mesh_builder.height_scale = GameSettings.height_scale
 		_smooth_mesh_builder.terrain_scale = GameSettings.terrain_scale
-		mesh = _smooth_mesh_builder.build_mesh(_current_heightmap, current_grid_size)
+		mesh = _smooth_mesh_builder.build_mesh(_current_heightmap, grid_size)
 	else:
 		_block_mesh_builder.height_scale = GameSettings.height_scale
 		_block_mesh_builder.terrain_scale = GameSettings.terrain_scale
-		mesh = _block_mesh_builder.build_mesh(_current_heightmap, current_grid_size)
+		mesh = _block_mesh_builder.build_mesh(_current_heightmap, grid_size)
 	
 	mesh_instance.mesh = mesh
 	
-	var elapsed := Time.get_ticks_msec() - start_time
-	terrain_generated.emit(float(elapsed))
+	if generation_time > 0:
+		terrain_generated.emit(generation_time)
 	
 	var style_name := "Smooth" if mesh_style == MeshStyle.SMOOTH else "Blocks"
-	print("Terrain generated: %s (%s), %dx%d grid, %.1fms" % [
+	print("Terrain applied to mesh: %s (%s), %dx%d grid" % [
 		_generator.get_algorithm_name(),
 		style_name,
-		current_grid_size, current_grid_size,
-		elapsed
+		grid_size, grid_size
 	])
 
 
@@ -187,12 +194,11 @@ func set_algorithm() -> void:
 			_generator.roughness = GameSettings.md_roughness
 		GameSettings.Algorithm.PERLIN_NOISE:
 			_generator = PerlinNoise.new()
-			# Use default Perlin settings for now
 
 
 func regenerate_with_new_seed() -> void:
 	GameSettings.randomize_seed()
-	generate_terrain()
+	generate_terrain(GameSettings.auto_refresh)
 
 
 func get_heightmap() -> PackedFloat32Array:
@@ -250,8 +256,6 @@ func flatten_terrain() -> void:
 		_block_mesh_builder.height_scale = GameSettings.height_scale
 		_block_mesh_builder.terrain_scale = GameSettings.terrain_scale
 		mesh = _block_mesh_builder.build_mesh(_current_heightmap, current_grid_size)
-	
-	mesh_instance.mesh = mesh
 	
 	mesh_instance.mesh = mesh
 	

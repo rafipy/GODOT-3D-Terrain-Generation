@@ -14,7 +14,7 @@ const VALID_GRID_SIZES: Array[int] = [17, 33, 65, 129, 257, 513]
 @export var animation_speed: float = 6.0
 @export var hover_scale: float = 1.08
 @export var hover_speed: float = 12.0
-@export var hold_initial_delay: float = 0.5  # Delay before repeat starts
+@export var hold_initial_delay: float = 0.5
 @export var hold_repeat_rate: float = 0.1
 
 var _is_visible: bool = false
@@ -22,7 +22,7 @@ var _target_y: float = 0.0
 var _hidden_y: float = 0.0
 var _shown_y: float = 0.0
 var _current_algorithm: int = ALGORITHM_MIDPOINT
-var _grid_size: int = 129  # Default 129
+var _grid_size: int = 129
 
 # Button hover states
 var _button_scales: Dictionary = {}
@@ -31,7 +31,7 @@ var _button_targets: Dictionary = {}
 # Hold-to-repeat state
 var _hold_timer: Timer
 var _is_holding: bool = false
-var _hold_direction: int = 0  # -1 for down, 1 for up
+var _hold_direction: int = 0
 var _initial_hold: bool = true
 
 var auto_refresh = false
@@ -58,13 +58,11 @@ func _ready() -> void:
 	_hold_timer.one_shot = false
 	_hold_timer.timeout.connect(_on_hold_timer_timeout)
 	add_child(_hold_timer)
-	# Calculate positions
+	
 	await get_tree().process_frame
 	
-	# When hidden: panel moves DOWN so only toggle button (28px) is visible
-	# When shown: panel is at Y=0 (fully visible)
 	_shown_y = 0.0
-	_hidden_y = panel.size.y - 28.0  # Move down, only show toggle button
+	_hidden_y = panel.size.y - 28.0
 	
 	print("UIController: Panel size = ", panel.size)
 	print("UIController: _shown_y = ", _shown_y, ", _hidden_y = ", _hidden_y)
@@ -78,6 +76,7 @@ func _ready() -> void:
 	_setup_buttons()
 	_connect_signals()
 	_update_grid_label()
+	_update_refresh_button_state()
 	
 	print("UIController: Ready! Panel hidden at y=", _hidden_y)
 
@@ -86,7 +85,6 @@ func _process(delta: float) -> void:
 	# Smooth panel slide with easing
 	var diff := _target_y - panel.position.y
 	if absf(diff) > 0.5:
-		# Ease out cubic for smooth deceleration
 		var t := animation_speed * delta
 		panel.position.y += diff * t * (2.0 - t)
 	else:
@@ -102,7 +100,7 @@ func _process(delta: float) -> void:
 
 
 func _setup_buttons() -> void:
-	var buttons := [toggle_btn, perlin_btn, midpoint_btn, grid_down_btn, grid_up_btn, generate_btn, reset_btn]
+	var buttons := [toggle_btn, perlin_btn, midpoint_btn, grid_down_btn, grid_up_btn, generate_btn, reset_btn, refresh_btn]
 	for btn in buttons:
 		if btn:
 			_button_scales[btn] = 1.0
@@ -134,8 +132,28 @@ func _connect_signals() -> void:
 	if refresh_chk:
 		refresh_chk.toggled.connect(_on_check)
 
+
 func _on_check(checked: bool) -> void:
 	GameSettings.auto_refresh = checked
+	_update_refresh_button_state()
+	
+	# If turning auto_refresh ON, apply any pending terrain
+	if checked:
+		var terrain := get_tree().get_first_node_in_group("terrain")
+		if terrain and terrain.has_method("apply_pending_terrain"):
+			terrain.apply_pending_terrain()
+
+
+func _update_refresh_button_state() -> void:
+	"""Update refresh button appearance based on auto_refresh state"""
+	if refresh_btn:
+		# Enable the manual refresh button only when auto_refresh is OFF
+		refresh_btn.disabled = GameSettings.auto_refresh
+		if GameSettings.auto_refresh:
+			refresh_btn.text = "Auto"
+		else:
+			refresh_btn.text = "Refresh"
+
 
 func _on_button_hover(btn: Button, hovered: bool) -> void:
 	_button_targets[btn] = hover_scale if hovered else 1.0
@@ -168,20 +186,26 @@ func _on_midpoint() -> void:
 func _change_grid_size(direction: int) -> void:
 	GameSettings.terrain_power += direction
 
+
 func _refresh():
+	"""Apply pending terrain data to mesh"""
 	var terrain := get_tree().get_first_node_in_group("terrain")
 	if terrain:
-		terrain.force_generate()
+		# Check if there's pending data to apply
+		if terrain.has_method("apply_pending_terrain"):
+			terrain.apply_pending_terrain()
+		else:
+			# Fallback: force regenerate
+			terrain.force_generate()
+
 	
 func _on_grid_button_down(direction: int) -> void:
 	_hold_direction = direction
 	_is_holding = true
 	_initial_hold = true
 	
-	# Execute once immediately
 	_change_grid_size(direction)
 	
-	# Start timer with initial delay
 	_hold_timer.wait_time = hold_initial_delay
 	_hold_timer.start()
 
@@ -193,7 +217,6 @@ func _on_grid_button_up() -> void:
 
 func _on_hold_timer_timeout() -> void:
 	if _is_holding:
-		# After initial delay, switch to faster repeat rate
 		if _initial_hold:
 			_initial_hold = false
 			_hold_timer.wait_time = hold_repeat_rate
