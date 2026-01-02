@@ -14,24 +14,24 @@ enum MeshStyle { SMOOTH, BLOCKS }
 		if is_node_ready() and _generator:
 			generate_terrain()
 
-@export var terrain_seed: int = 12345:
-	set(value):
-		terrain_seed = value
-		GameSettings.terrain_seed = value
-		if is_node_ready() and _generator:
-			generate_terrain()
+#@export var terrain_seed: int = 12345:
+	#set(value):
+		#terrain_seed = value
+		#GameSettings.terrain_seed = value
+		#if is_node_ready() and _generator:
+			#generate_terrain()
 
-@export_group("Terrain Dimensions")
-@export_range(17, 513, 16) var grid_size: int = 129:  # Grid resolution (vertices per side)
-	set(value):
-		# Clamp to valid power-of-2 + 1 values
-		var power := int(log(value - 1) / log(2))
-		power = clampi(power, 4, 9)
-		grid_size = (1 << power) + 1
-		terrain_size = power
-		GameSettings.terrain_size = power
-		if is_node_ready() and _generator:
-			generate_terrain()
+#@export_group("Terrain Dimensions")
+#@export_range(17, 513, 16) var grid_size: int = 129:  # Grid resolution (vertices per side)
+	#set(value):
+		## Clamp to valid power-of-2 + 1 values
+		#var power := int(log(value - 1) / log(2))
+		#power = clampi(power, 4, 11)
+		#grid_size = (1 << power) + 1
+		#terrain_size = power
+		#GameSettings.terrain_size = power
+		#if is_node_ready() and _generator:
+			#generate_terrain()
 
 @export_range(0.1, 5.0, 0.1) var terrain_scale: float = 1.5:  # Horizontal scale
 	set(value):
@@ -79,7 +79,6 @@ enum MeshStyle { SMOOTH, BLOCKS }
 
 @onready var mesh_instance: MeshInstance3D = $MeshInstance3D
 
-var terrain_size: int = 7  # Internal power value for grid calculation
 var _generator: BaseTerrainGenerator
 var _island_mask: IslandMask
 var _smooth_mesh_builder: TerrainMeshBuilder
@@ -89,21 +88,31 @@ var _current_heightmap: PackedFloat32Array
 
 func _ready() -> void:
 	_setup_components()
-	
-	# Sync with GameSettings after components are set up
-	terrain_seed = GameSettings.terrain_seed
-	terrain_size = GameSettings.terrain_size
-	grid_size = GameSettings.get_grid_size()  # Sync grid_size from terrain_size
-	terrain_scale = GameSettings.terrain_scale
-	height_scale = GameSettings.height_scale
-	roughness = GameSettings.md_roughness
-	island_inner_radius = GameSettings.island_inner_radius
-	island_outer_radius = GameSettings.island_outer_radius
+	add_to_group("terrain")
+	GameSettings.settings_changed.connect(_on_settings_changed)
+	## Sync with GameSettings after components are set up
+	#terrain_seed = GameSettings.terrain_seed
+	#terrain_size = GameSettings.terrain_size
+	#grid_size = GameSettings.get_grid_size()  # Sync grid_size from terrain_size
+	#terrain_scale = GameSettings.terrain_scale
+	#height_scale = GameSettings.height_scale
+	#roughness = GameSettings.md_roughness
+	#island_inner_radius = GameSettings.island_inner_radius
+	#island_outer_radius = GameSettings.island_outer_radius
 	
 	if auto_generate:
 		generate_terrain()
 
+func force_generate():
+	generate_terrain()
 
+func _on_settings_changed() -> void:
+	set_algorithm()
+	if not GameSettings.auto_refresh:
+		return
+
+	generate_terrain()
+	
 func _setup_components() -> void:
 	_generator = MidpointDisplacement.new()
 	_generator.roughness = GameSettings.md_roughness
@@ -171,16 +180,14 @@ func generate_terrain() -> void:
 	])
 
 
-func set_algorithm(algo: GameSettings.Algorithm) -> void:
-	match algo:
+func set_algorithm() -> void:
+	match GameSettings.current_algorithm:
 		GameSettings.Algorithm.MIDPOINT_DISPLACEMENT:
 			_generator = MidpointDisplacement.new()
 			_generator.roughness = GameSettings.md_roughness
 		GameSettings.Algorithm.PERLIN_NOISE:
 			_generator = PerlinNoise.new()
 			# Use default Perlin settings for now
-	
-	GameSettings.current_algorithm = algo
 
 
 func regenerate_with_new_seed() -> void:

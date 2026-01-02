@@ -14,33 +14,50 @@ const VALID_GRID_SIZES: Array[int] = [17, 33, 65, 129, 257, 513]
 @export var animation_speed: float = 6.0
 @export var hover_scale: float = 1.08
 @export var hover_speed: float = 12.0
+@export var hold_initial_delay: float = 0.5  # Delay before repeat starts
+@export var hold_repeat_rate: float = 0.1
 
 var _is_visible: bool = false
 var _target_y: float = 0.0
 var _hidden_y: float = 0.0
 var _shown_y: float = 0.0
 var _current_algorithm: int = ALGORITHM_MIDPOINT
-var _grid_size_index: int = 3  # Default 129
+var _grid_size: int = 129  # Default 129
 
 # Button hover states
 var _button_scales: Dictionary = {}
 var _button_targets: Dictionary = {}
+
+# Hold-to-repeat state
+var _hold_timer: Timer
+var _is_holding: bool = false
+var _hold_direction: int = 0  # -1 for down, 1 for up
+var _initial_hold: bool = true
+
+var auto_refresh = false
 
 @onready var panel: Control = $Panel
 @onready var toggle_btn: Button = $Panel/ToggleButton
 @onready var content: HBoxContainer = $Panel/Content
 @onready var perlin_btn: Button = $Panel/Content/PerlinButton
 @onready var midpoint_btn: Button = $Panel/Content/MidpointButton
-@onready var grid_down_btn: Button = $Panel/Content/GridSection/GridDown
-@onready var grid_label: Label = $Panel/Content/GridSection/GridLabel
-@onready var grid_up_btn: Button = $Panel/Content/GridSection/GridUp
+@onready var grid_down_btn: Button = $Panel/Content/GridSection/GridController/GridDown
+@onready var grid_label: Label = $Panel/Content/GridSection/GridController/GridLabel
+@onready var grid_up_btn: Button = $Panel/Content/GridSection/GridController/GridUp
 @onready var seed_label: Label = $Panel/Content/SeedSection/SeedLabel
 @onready var generate_btn: Button = $Panel/Content/GenerateButton
 @onready var reset_btn: Button = $Panel/Content/ResetButton
-
+@onready var refresh_chk: CheckBox = $Panel/Content/RefreshSection/RefreshCheck
+@onready var refresh_btn: Button = $Panel/Content/RefreshButton
 
 func _ready() -> void:
 	print("UIController: Initializing...")
+	
+	# Grid up and down hold timer
+	_hold_timer = Timer.new()
+	_hold_timer.one_shot = false
+	_hold_timer.timeout.connect(_on_hold_timer_timeout)
+	add_child(_hold_timer)
 	# Calculate positions
 	await get_tree().process_frame
 	
@@ -57,6 +74,7 @@ func _ready() -> void:
 	_target_y = _hidden_y
 	panel.position.y = _hidden_y
 	
+	GameSettings.settings_changed.connect(_update_grid_label)
 	_setup_buttons()
 	_connect_signals()
 	_update_grid_label()
@@ -102,14 +120,22 @@ func _connect_signals() -> void:
 	if midpoint_btn:
 		midpoint_btn.pressed.connect(_on_midpoint)
 	if grid_down_btn:
-		grid_down_btn.pressed.connect(_on_grid_down)
+		grid_down_btn.button_down.connect(_on_grid_button_down.bind(-1))
+		grid_down_btn.button_up.connect(_on_grid_button_up)
 	if grid_up_btn:
-		grid_up_btn.pressed.connect(_on_grid_up)
+		grid_up_btn.button_down.connect(_on_grid_button_down.bind(1))
+		grid_up_btn.button_up.connect(_on_grid_button_up)
 	if generate_btn:
 		generate_btn.pressed.connect(func(): generate_pressed.emit())
 	if reset_btn:
 		reset_btn.pressed.connect(func(): reset_pressed.emit())
+	if refresh_btn:
+		refresh_btn.pressed.connect(_refresh)
+	if refresh_chk:
+		refresh_chk.toggled.connect(_on_check)
 
+func _on_check(checked: bool) -> void:
+	GameSettings.auto_refresh = checked
 
 func _on_button_hover(btn: Button, hovered: bool) -> void:
 	_button_targets[btn] = hover_scale if hovered else 1.0
@@ -128,37 +154,56 @@ func _on_toggle() -> void:
 func _on_perlin() -> void:
 	_current_algorithm = ALGORITHM_PERLIN
 	_update_algo_buttons()
-	algorithm_changed.emit(ALGORITHM_PERLIN)
+	GameSettings.current_algorithm = GameSettings.Algorithm.PERLIN_NOISE
+	GameSettings.settings_changed.emit()
 
 
 func _on_midpoint() -> void:
 	_current_algorithm = ALGORITHM_MIDPOINT
 	_update_algo_buttons()
-	algorithm_changed.emit(ALGORITHM_MIDPOINT)
+	GameSettings.current_algorithm = GameSettings.Algorithm.MIDPOINT_DISPLACEMENT
+	GameSettings.settings_changed.emit()
 
 
-func _on_grid_down() -> void:
-	if _grid_size_index > 0:
-		_grid_size_index -= 1
-		_update_grid_label()
-		grid_size_changed.emit(VALID_GRID_SIZES[_grid_size_index])
+func _change_grid_size(direction: int) -> void:
+	GameSettings.terrain_power += direction
+
+func _refresh():
+	var terrain := get_tree().get_first_node_in_group("terrain")
+	if terrain:
+		terrain.force_generate()
+	
+func _on_grid_button_down(direction: int) -> void:
+	_hold_direction = direction
+	_is_holding = true
+	_initial_hold = true
+	
+	# Execute once immediately
+	_change_grid_size(direction)
+	
+	# Start timer with initial delay
+	_hold_timer.wait_time = hold_initial_delay
+	_hold_timer.start()
 
 
-func _on_grid_up() -> void:
-	if _grid_size_index < VALID_GRID_SIZES.size() - 1:
-		_grid_size_index += 1
-		_update_grid_label()
-		grid_size_changed.emit(VALID_GRID_SIZES[_grid_size_index])
+func _on_grid_button_up() -> void:
+	_is_holding = false
+	_hold_timer.stop()
+
+
+func _on_hold_timer_timeout() -> void:
+	if _is_holding:
+		# After initial delay, switch to faster repeat rate
+		if _initial_hold:
+			_initial_hold = false
+			_hold_timer.wait_time = hold_repeat_rate
+		
+		_change_grid_size(_hold_direction)
 
 
 func _update_grid_label() -> void:
-	if grid_label:
-		grid_label.text = str(VALID_GRID_SIZES[_grid_size_index])
-	# Update button states
-	if grid_down_btn:
-		grid_down_btn.disabled = (_grid_size_index <= 0)
-	if grid_up_btn:
-		grid_up_btn.disabled = (_grid_size_index >= VALID_GRID_SIZES.size() - 1)
+	var size := GameSettings.get_grid_size()
+	grid_label.text = "%d" % [size]
 
 
 func _update_algo_buttons() -> void:
@@ -176,7 +221,7 @@ func set_algorithm(algo: int) -> void:
 func set_grid_size(new_size: int) -> void:
 	for i in range(VALID_GRID_SIZES.size()):
 		if VALID_GRID_SIZES[i] == new_size:
-			_grid_size_index = i
+			_grid_size = i
 			_update_grid_label()
 			return
 

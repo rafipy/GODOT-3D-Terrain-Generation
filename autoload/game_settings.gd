@@ -5,16 +5,19 @@ extends Node
 signal settings_changed
 signal seed_changed(new_seed: int)
 
+var auto_refresh: bool = false:
+	set(value):
+		auto_refresh = value
+
 # Terrain generation seed - same for both algorithms
 var terrain_seed: int = 12345:
 	set(value):
 		terrain_seed = value
 		seed_changed.emit(value)
 
-# Terrain dimensions
-var terrain_size: int = 7:  # 2^7 + 1 = 129 vertices per side
+var terrain_power: int = 7:
 	set(value):
-		terrain_size = clampi(value, 4, 9)  # 17 to 513 vertices
+		terrain_power = max(value, 1) # only prevent negatives
 		settings_changed.emit()
 
 var terrain_scale: float = 1.5:  # Larger terrain
@@ -50,10 +53,11 @@ var perlin_frequency: float = 0.02
 func _ready() -> void:
 	randomize()
 	terrain_seed = randi()
+	
 
 
 func get_grid_size() -> int:
-	return (1 << terrain_size) + 1
+	return (1 << terrain_power) + 1
 
 
 func create_rng() -> RandomNumberGenerator:
@@ -67,7 +71,7 @@ func randomize_seed() -> void:
 
 
 func reset_to_defaults() -> void:
-	terrain_size = 7
+	terrain_power = 7
 	terrain_scale = 1.5
 	height_scale = 25.0
 	md_roughness = 0.65

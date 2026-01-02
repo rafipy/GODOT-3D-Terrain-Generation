@@ -1,0 +1,571 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcxlwjdg0bqd8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h03w5"]
+content_margin_left = 20.0
+content_margin_top = 8.0
+content_margin_right = 20.0
+content_margin_bottom = 16.0
+bg_color = Color(0.12, 0.15, 0.2, 0.92)
+border_width_left = 2
+border_color = Color(0.3, 0.5, 0.7, 0.6)
+corner_radius_top_left = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k3gf5"]
+content_margin_left = 12.0
+content_margin_right = 12.0
+bg_color = Color(0.2, 0.7, 0.3, 0.95)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sjadj"]
+content_margin_left = 12.0
+content_margin_right = 12.0
+bg_color = Color(0.3, 0.85, 0.4, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7iif0"]
+
+[node name="Metrics" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 992.0
+offset_top = -2.0
+offset_bottom = -481.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_h03w5")
+
+[node name="MetricsButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -149.0
+offset_top = 179.0
+offset_right = -49.0
+offset_bottom = 207.0
+grow_horizontal = 2
+rotation = -1.5707964
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_k3gf5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_sjadj")
+theme_override_styles/hover = SubResource("StyleBoxFlat_sjadj")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7iif0")
+text = "^  Metrics  ^"
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 9.0
+offset_right = 280.0
+offset_bottom = 25.0
+columns = 7
+
+[node name="Grid" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = " Grid "
+
+[node name="Sep3" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Time" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "Time (ms)"
+
+[node name="Sep4" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "Space (mb)"
+
+[node name="Sep5" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "PTRM"
+
+[node name="Grid2" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "3"
+
+[node name="Sep6" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Time2" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "123456.0"
+
+[node name="Sep7" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space2" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "213.4"
+
+[node name="Sep8" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM2" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "0.67"
+
+[node name="Grid3" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "5"
+
+[node name="Sep9" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Time3" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "123456.0"
+
+[node name="Sep10" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space3" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "213.4"
+
+[node name="Sep11" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM3" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "0.67"
+
+[node name="Grid4" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "9"
+
+[node name="Sep12" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Time4" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "123456.0"
+
+[node name="Sep13" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space4" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "213.4"
+
+[node name="Sep14" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM4" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "0.67"
+
+[node name="Grid5" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "17"
+
+[node name="Sep15" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Time5" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "123456.0"
+
+[node name="Sep16" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space5" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "213.4"
+
+[node name="Sep17" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM5" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "0.67"
+
+[node name="Grid6" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "33"
+
+[node name="Sep18" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Time6" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "123456.0"
+
+[node name="Sep19" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space6" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "213.4"
+
+[node name="Sep20" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM6" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "0.67"
+
+[node name="Grid7" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "65"
+
+[node name="Sep21" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Time7" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "123456.0"
+
+[node name="Sep22" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space7" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "213.4"
+
+[node name="Sep23" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM7" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "0.67"
+
+[node name="Grid8" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "129"
+
+[node name="Sep24" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Time8" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "123456.0"
+
+[node name="Sep25" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space8" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "213.4"
+
+[node name="Sep26" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM8" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "0.67"
+
+[node name="Grid9" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "513"
+
+[node name="Sep27" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Time9" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "123456.0"
+
+[node name="Sep28" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space9" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "213.4"
+
+[node name="Sep29" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM9" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "0.67"
+
+[node name="Grid10" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "1025"
+
+[node name="Sep30" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Time10" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "123456.0"
+
+[node name="Sep31" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space10" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "213.4"
+
+[node name="Sep32" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM10" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "0.67"
+
+[node name="Grid11" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "2049"
+
+[node name="Sep33" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Time11" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "123456.0"
+
+[node name="Sep34" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space11" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "213.4"
+
+[node name="Sep35" type="VSeparator" parent="GridContainer"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM11" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "0.67"
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

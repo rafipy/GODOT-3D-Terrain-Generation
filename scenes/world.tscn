@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://d18ry0bdurc82"]
+[gd_scene load_steps=13 format=3 uid="uid://d18ry0bdurc82"]
 
 [ext_resource type="Script" uid="uid://c2i64aoch2cqr" path="res://scripts/world.gd" id="1_world"]
-[ext_resource type="PackedScene" path="res://ui/control.tscn" id="2_71j4m"]
+[ext_resource type="PackedScene" uid="uid://dnlfwf7qkdkgn" path="res://ui/control.tscn" id="2_71j4m"]
 [ext_resource type="Script" uid="uid://ctfmy7sdd65u7" path="res://scripts/terrain/terrain_controller.gd" id="2_terrain"]
 [ext_resource type="Script" uid="uid://c3yedgqsb7pau" path="res://scripts/camera/orbit_camera.gd" id="3_camera"]
 [ext_resource type="Shader" uid="uid://c6x5mi8ywmjbf" path="res://shaders/water_toon.gdshader" id="4_water_shader"]
+[ext_resource type="PackedScene" uid="uid://bcxlwjdg0bqd8" path="res://ui/metric.tscn" id="6_qfnet"]
 
 [sub_resource type="StandardMaterial3D" id="ShaderMaterial_terrain"]
 transparency = 2
@@ -120,3 +121,5 @@ environment = SubResource("Environment_1")
 layer = 10
 
 [node name="UIController" parent="CanvasLayer" instance=ExtResource("2_71j4m")]
+
+[node name="MetricController" parent="CanvasLayer" instance=ExtResource("6_qfnet")]
