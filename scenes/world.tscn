@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d18ry0bdurc82"]
+[gd_scene load_steps=14 format=3 uid="uid://d18ry0bdurc82"]
 
 [ext_resource type="Script" uid="uid://c2i64aoch2cqr" path="res://scripts/world.gd" id="1_world"]
 [ext_resource type="PackedScene" uid="uid://dnlfwf7qkdkgn" path="res://ui/control.tscn" id="2_71j4m"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://c3yedgqsb7pau" path="res://scripts/camera/orbit_camera.gd" id="3_camera"]
 [ext_resource type="Shader" uid="uid://c6x5mi8ywmjbf" path="res://shaders/water_toon.gdshader" id="4_water_shader"]
 [ext_resource type="PackedScene" uid="uid://bcxlwjdg0bqd8" path="res://ui/metric.tscn" id="6_qfnet"]
+[ext_resource type="Script" uid="uid://c0uykmxtc8x8x" path="res://scripts/ui/metrics.gd" id="7_i7141"]
 
 [sub_resource type="StandardMaterial3D" id="ShaderMaterial_terrain"]
 transparency = 2
@@ -123,3 +124,4 @@ layer = 10
 [node name="UIController" parent="CanvasLayer" instance=ExtResource("2_71j4m")]
 
 [node name="MetricController" parent="CanvasLayer" instance=ExtResource("6_qfnet")]
+script = ExtResource("7_i7141")

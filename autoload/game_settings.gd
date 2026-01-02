@@ -49,6 +49,7 @@ var perlin_persistence: float = 0.5
 var perlin_lacunarity: float = 2.0
 var perlin_frequency: float = 0.02
 
+var simulating: bool = false
 
 func _ready() -> void:
 	randomize()

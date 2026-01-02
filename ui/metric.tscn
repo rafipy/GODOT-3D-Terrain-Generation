@@ -36,9 +36,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 992.0
-offset_top = -2.0
-offset_bottom = -481.0
+offset_left = 837.0
+offset_top = -1.0
+offset_right = -1.0
+offset_bottom = -393.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -49,19 +50,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 22.0
 offset_top = -1.0
+offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_h03w5")
 
-[node name="MetricsButton" type="Button" parent="."]
+[node name="ToggleButton" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -149.0
-offset_top = 179.0
-offset_right = -49.0
-offset_bottom = 207.0
+offset_left = -226.0
+offset_top = 192.0
+offset_right = -126.0
+offset_bottom = 220.0
 grow_horizontal = 2
 rotation = -1.5707964
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -73,15 +75,51 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_sjadj")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7iif0")
 text = "^  Metrics  ^"
 
-[node name="GridContainer" type="GridContainer" parent="."]
+[node name="TheGrid" type="GridContainer" parent="."]
 layout_mode = 0
-offset_left = 46.0
-offset_top = 9.0
-offset_right = 280.0
-offset_bottom = 25.0
+offset_left = 45.0
+offset_top = 11.0
+offset_right = 440.0
+offset_bottom = 267.0
+columns = 3
+
+[node name="MidPoint" type="Label" parent="TheGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "Midpoint Displacement"
+
+[node name="MidPoint" type="Label" parent="TheGrid/MidPoint"]
+layout_mode = 0
+offset_left = 202.0
+offset_top = 285.0
+offset_right = 353.0
+offset_bottom = 301.0
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 9
+text = "Click simulate to generate results"
+
+[node name="Sep8" type="VSeparator" parent="TheGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Perlin Noise" type="Label" parent="TheGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "Perlin Noise"
+
+[node name="MidpointGrid" type="GridContainer" parent="TheGrid"]
+layout_mode = 2
 columns = 7
 
-[node name="Grid" type="Label" parent="GridContainer"]
+[node name="Grid" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -89,11 +127,11 @@ theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
 text = " Grid "
 
-[node name="Sep3" type="VSeparator" parent="GridContainer"]
+[node name="Sep3" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Time" type="Label" parent="GridContainer"]
+[node name="Time" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -101,11 +139,11 @@ theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
 text = "Time (ms)"
 
-[node name="Sep4" type="VSeparator" parent="GridContainer"]
+[node name="Sep4" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Space" type="Label" parent="GridContainer"]
+[node name="Space" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -113,11 +151,11 @@ theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
 text = "Space (mb)"
 
-[node name="Sep5" type="VSeparator" parent="GridContainer"]
+[node name="Sep5" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM" type="Label" parent="GridContainer"]
+[node name="PTRM" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -125,7 +163,7 @@ theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
 text = "PTRM"
 
-[node name="Grid2" type="Label" parent="GridContainer"]
+[node name="Grid2" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -133,43 +171,43 @@ theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
 text = "3"
 
-[node name="Sep6" type="VSeparator" parent="GridContainer"]
+[node name="Sep6" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Time2" type="Label" parent="GridContainer"]
+[node name="Time2" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "123456.0"
+text = "-------------"
 
-[node name="Sep7" type="VSeparator" parent="GridContainer"]
+[node name="Sep7" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Space2" type="Label" parent="GridContainer"]
+[node name="Space2" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "213.4"
+text = "--------"
 
-[node name="Sep8" type="VSeparator" parent="GridContainer"]
+[node name="Sep8" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM2" type="Label" parent="GridContainer"]
+[node name="PTRM2" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "0.67"
+text = "------"
 
-[node name="Grid3" type="Label" parent="GridContainer"]
+[node name="Grid3" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -177,43 +215,43 @@ theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
 text = "5"
 
-[node name="Sep9" type="VSeparator" parent="GridContainer"]
+[node name="Sep9" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Time3" type="Label" parent="GridContainer"]
+[node name="Time3" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "123456.0"
+text = "-------------"
 
-[node name="Sep10" type="VSeparator" parent="GridContainer"]
+[node name="Sep10" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Space3" type="Label" parent="GridContainer"]
+[node name="Space3" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "213.4"
+text = "--------"
 
-[node name="Sep11" type="VSeparator" parent="GridContainer"]
+[node name="Sep11" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM3" type="Label" parent="GridContainer"]
+[node name="PTRM3" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "0.67"
+text = "------"
 
-[node name="Grid4" type="Label" parent="GridContainer"]
+[node name="Grid4" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -221,43 +259,43 @@ theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
 text = "9"
 
-[node name="Sep12" type="VSeparator" parent="GridContainer"]
+[node name="Sep12" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Time4" type="Label" parent="GridContainer"]
+[node name="Time4" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "123456.0"
+text = "-------------"
 
-[node name="Sep13" type="VSeparator" parent="GridContainer"]
+[node name="Sep13" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Space4" type="Label" parent="GridContainer"]
+[node name="Space4" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "213.4"
+text = "--------"
 
-[node name="Sep14" type="VSeparator" parent="GridContainer"]
+[node name="Sep14" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM4" type="Label" parent="GridContainer"]
+[node name="PTRM4" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "0.67"
+text = "------"
 
-[node name="Grid5" type="Label" parent="GridContainer"]
+[node name="Grid5" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -265,43 +303,43 @@ theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
 text = "17"
 
-[node name="Sep15" type="VSeparator" parent="GridContainer"]
+[node name="Sep15" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Time5" type="Label" parent="GridContainer"]
+[node name="Time5" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "123456.0"
+text = "-------------"
 
-[node name="Sep16" type="VSeparator" parent="GridContainer"]
+[node name="Sep16" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Space5" type="Label" parent="GridContainer"]
+[node name="Space5" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "213.4"
+text = "--------"
 
-[node name="Sep17" type="VSeparator" parent="GridContainer"]
+[node name="Sep17" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM5" type="Label" parent="GridContainer"]
+[node name="PTRM5" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "0.67"
+text = "------"
 
-[node name="Grid6" type="Label" parent="GridContainer"]
+[node name="Grid6" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -309,43 +347,43 @@ theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
 text = "33"
 
-[node name="Sep18" type="VSeparator" parent="GridContainer"]
+[node name="Sep18" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Time6" type="Label" parent="GridContainer"]
+[node name="Time6" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "123456.0"
+text = "-------------"
 
-[node name="Sep19" type="VSeparator" parent="GridContainer"]
+[node name="Sep19" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Space6" type="Label" parent="GridContainer"]
+[node name="Space6" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "213.4"
+text = "--------"
 
-[node name="Sep20" type="VSeparator" parent="GridContainer"]
+[node name="Sep20" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM6" type="Label" parent="GridContainer"]
+[node name="PTRM6" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "0.67"
+text = "------"
 
-[node name="Grid7" type="Label" parent="GridContainer"]
+[node name="Grid7" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -353,43 +391,43 @@ theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
 text = "65"
 
-[node name="Sep21" type="VSeparator" parent="GridContainer"]
+[node name="Sep21" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Time7" type="Label" parent="GridContainer"]
+[node name="Time7" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "123456.0"
+text = "-------------"
 
-[node name="Sep22" type="VSeparator" parent="GridContainer"]
+[node name="Sep22" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Space7" type="Label" parent="GridContainer"]
+[node name="Space7" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "213.4"
+text = "--------"
 
-[node name="Sep23" type="VSeparator" parent="GridContainer"]
+[node name="Sep23" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM7" type="Label" parent="GridContainer"]
+[node name="PTRM7" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "0.67"
+text = "------"
 
-[node name="Grid8" type="Label" parent="GridContainer"]
+[node name="Grid8" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -397,43 +435,87 @@ theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
 text = "129"
 
-[node name="Sep24" type="VSeparator" parent="GridContainer"]
+[node name="Sep24" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Time8" type="Label" parent="GridContainer"]
+[node name="Time8" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "123456.0"
+text = "-------------"
 
-[node name="Sep25" type="VSeparator" parent="GridContainer"]
+[node name="Sep25" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Space8" type="Label" parent="GridContainer"]
+[node name="Space8" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "213.4"
+text = "--------"
 
-[node name="Sep26" type="VSeparator" parent="GridContainer"]
+[node name="Sep26" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM8" type="Label" parent="GridContainer"]
+[node name="PTRM8" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "0.67"
+text = "------"
 
-[node name="Grid9" type="Label" parent="GridContainer"]
+[node name="Grid9" type="Label" parent="TheGrid/MidpointGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "257"
+
+[node name="Sep27" type="VSeparator" parent="TheGrid/MidpointGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Time9" type="Label" parent="TheGrid/MidpointGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "-------------"
+
+[node name="Sep28" type="VSeparator" parent="TheGrid/MidpointGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space9" type="Label" parent="TheGrid/MidpointGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "--------"
+
+[node name="Sep29" type="VSeparator" parent="TheGrid/MidpointGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM9" type="Label" parent="TheGrid/MidpointGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "------"
+
+[node name="Grid10" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -441,43 +523,43 @@ theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
 text = "513"
 
-[node name="Sep27" type="VSeparator" parent="GridContainer"]
+[node name="Sep30" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Time9" type="Label" parent="GridContainer"]
+[node name="Time10" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "123456.0"
+text = "-------------"
 
-[node name="Sep28" type="VSeparator" parent="GridContainer"]
+[node name="Sep31" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Space9" type="Label" parent="GridContainer"]
+[node name="Space10" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "213.4"
+text = "--------"
 
-[node name="Sep29" type="VSeparator" parent="GridContainer"]
+[node name="Sep32" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM9" type="Label" parent="GridContainer"]
+[node name="PTRM10" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "0.67"
+text = "------"
 
-[node name="Grid10" type="Label" parent="GridContainer"]
+[node name="Grid11" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -485,43 +567,43 @@ theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
 text = "1025"
 
-[node name="Sep30" type="VSeparator" parent="GridContainer"]
+[node name="Sep33" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Time10" type="Label" parent="GridContainer"]
+[node name="Time11" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "123456.0"
+text = "-------------"
 
-[node name="Sep31" type="VSeparator" parent="GridContainer"]
+[node name="Sep34" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Space10" type="Label" parent="GridContainer"]
+[node name="Space11" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "213.4"
+text = "--------"
 
-[node name="Sep32" type="VSeparator" parent="GridContainer"]
+[node name="Sep35" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM10" type="Label" parent="GridContainer"]
+[node name="PTRM11" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "0.67"
+text = "------"
 
-[node name="Grid11" type="Label" parent="GridContainer"]
+[node name="Grid12" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -529,43 +611,506 @@ theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
 text = "2049"
 
-[node name="Sep33" type="VSeparator" parent="GridContainer"]
+[node name="Sep36" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Time11" type="Label" parent="GridContainer"]
+[node name="Time12" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "123456.0"
+text = "-------------"
 
-[node name="Sep34" type="VSeparator" parent="GridContainer"]
+[node name="Sep37" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="Space11" type="Label" parent="GridContainer"]
+[node name="Space12" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "213.4"
+text = "--------"
 
-[node name="Sep35" type="VSeparator" parent="GridContainer"]
+[node name="Sep38" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM11" type="Label" parent="GridContainer"]
+[node name="PTRM12" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "0.67"
+text = "------"
 
-[node name="Control" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Grid13" type="Label" parent="TheGrid/MidpointGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "4097"
+
+[node name="Sep39" type="VSeparator" parent="TheGrid/MidpointGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Time13" type="Label" parent="TheGrid/MidpointGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "-------------"
+
+[node name="Sep40" type="VSeparator" parent="TheGrid/MidpointGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space13" type="Label" parent="TheGrid/MidpointGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "--------"
+
+[node name="Sep41" type="VSeparator" parent="TheGrid/MidpointGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM13" type="Label" parent="TheGrid/MidpointGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "------"
+
+[node name="Sep7" type="VSeparator" parent="TheGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PerlinGrid" type="GridContainer" parent="TheGrid"]
+layout_mode = 2
+columns = 5
+
+[node name="Time" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "Time (ms)"
+
+[node name="Sep4" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "Space (mb)"
+
+[node name="Sep5" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "PTRM"
+
+[node name="Time2" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "-------------"
+
+[node name="Sep7" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space2" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "--------"
+
+[node name="Sep8" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM2" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "------"
+
+[node name="Time3" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "-------------"
+
+[node name="Sep10" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space3" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "--------"
+
+[node name="Sep11" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM3" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "------"
+
+[node name="Time4" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "-------------"
+
+[node name="Sep13" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space4" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "--------"
+
+[node name="Sep14" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM4" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "------"
+
+[node name="Time5" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "-------------"
+
+[node name="Sep16" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space5" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "--------"
+
+[node name="Sep17" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM5" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "------"
+
+[node name="Time6" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "-------------"
+
+[node name="Sep19" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space6" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "--------"
+
+[node name="Sep20" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM6" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "------"
+
+[node name="Time7" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "-------------"
+
+[node name="Sep22" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space7" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "--------"
+
+[node name="Sep23" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM7" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "------"
+
+[node name="Time8" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "-------------"
+
+[node name="Sep25" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space8" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "--------"
+
+[node name="Sep26" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM8" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "------"
+
+[node name="Time9" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "-------------"
+
+[node name="Sep28" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space9" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "--------"
+
+[node name="Sep29" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM9" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "------"
+
+[node name="Time10" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "-------------"
+
+[node name="Sep31" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space10" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "--------"
+
+[node name="Sep32" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM10" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "------"
+
+[node name="Time11" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "-------------"
+
+[node name="Sep34" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space11" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "--------"
+
+[node name="Sep35" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM11" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "------"
+
+[node name="Time12" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "-------------"
+
+[node name="Sep37" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space12" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "--------"
+
+[node name="Sep38" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM12" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "------"
+
+[node name="Time13" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "-------------"
+
+[node name="Sep39" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="Space13" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "--------"
+
+[node name="Sep40" type="VSeparator" parent="TheGrid/PerlinGrid"]
+modulate = Color(0.4, 0.55, 0.7, 0.4)
+layout_mode = 2
+
+[node name="PTRM13" type="Label" parent="TheGrid/PerlinGrid"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "------"

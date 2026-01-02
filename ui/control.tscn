@@ -8,10 +8,10 @@ content_margin_top = 8.0
 content_margin_right = 20.0
 content_margin_bottom = 16.0
 bg_color = Color(0.12, 0.15, 0.2, 0.92)
-border_width_left = 2
+border_width_top = 2
 border_color = Color(0.3, 0.5, 0.7, 0.6)
 corner_radius_top_left = 20
-corner_radius_bottom_left = 20
+corner_radius_top_right = 20
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toggle"]
 content_margin_left = 12.0
@@ -115,8 +115,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -50.0
+offset_top = 2.0
 offset_right = 50.0
-offset_bottom = 28.0
+offset_bottom = 30.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)

@@ -143,13 +143,74 @@ func generate_terrain(update_mesh: bool = true) -> void:
 		# Store for later application
 		_pending_heightmap = generated_heightmap
 		_pending_grid_size = current_grid_size
-		print("Terrain generated in background: %s, %dx%d grid, %.1fms (not applied to mesh)" % [
-			_generator.get_algorithm_name(),
-			current_grid_size, current_grid_size,
-			elapsed
-		])
+		if !GameSettings.simulating:
+			var msg = "%s, %dx%d grid, took %.0fms!" % [
+				 		_generator.get_algorithm_name(),
+						current_grid_size, current_grid_size, elapsed
+						]
+			show_popup(msg) 
 
+var popup_window: Window = null
+var active_tween: Tween = null
 
+func show_popup(text: String, duration: float = 1, font_size: int = 12):
+	# If a window already exists, clean up the old animation/content
+	if is_instance_valid(popup_window):
+		if active_tween:
+			active_tween.kill() # Stop the old fade-out
+		
+		var label = popup_window.get_child(0) # Get the label
+		label.text = text
+		label.add_theme_font_size_override("font_size", font_size)
+		start_fade_animation(label, duration)
+		return
+
+	#Setup the Window (Only if one doesn't exist)
+	popup_window = Window.new()
+	popup_window.transparent = true
+	popup_window.borderless = true
+	popup_window.unfocusable = true
+	popup_window.mouse_passthrough = true
+	popup_window.gui_embed_subwindows = true
+	
+	popup_window.size = Vector2i(800, 200) 
+	get_tree().root.add_child(popup_window)
+	
+	
+	var label := Label.new()
+	label.name = "PopupLabel"
+	label.text = text
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.add_theme_font_size_override("font_size", font_size)
+	label.add_theme_color_override("font_color", Color.WHITE)
+	label.add_theme_constant_override("outline_size", 8)
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	
+	label.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	label.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	
+	label.modulate.a = 0.0
+	popup_window.add_child(label)
+	
+	start_fade_animation(label, duration)
+
+func start_fade_animation(label: Label, duration: float):
+	# Create a new tween for this specific fade sequence
+	active_tween = create_tween()
+	
+
+	active_tween.tween_property(label, "modulate:a", 1.0, 0.2)
+
+	active_tween.tween_interval(duration)
+
+	active_tween.tween_property(label, "modulate:a", 0.0, 0.4)
+	
+	active_tween.finished.connect(func():
+		if is_instance_valid(popup_window):
+			popup_window.queue_free()
+			popup_window = null
+	)
+	
 func apply_pending_terrain() -> void:
 	"""Apply the pending terrain data to the mesh (called when auto_refresh is turned on or Refresh is pressed)"""
 	if _pending_heightmap.size() > 0 and _pending_grid_size > 0:

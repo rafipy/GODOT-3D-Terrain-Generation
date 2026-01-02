@@ -49,6 +49,7 @@ var auto_refresh = false
 @onready var reset_btn: Button = $Panel/Content/ResetButton
 @onready var refresh_chk: CheckBox = $Panel/Content/RefreshSection/RefreshCheck
 @onready var refresh_btn: Button = $Panel/Content/RefreshButton
+@onready var simulate_btn: Button = $Panel/Content/SimulateButton
 
 func _ready() -> void:
 	print("UIController: Initializing...")
@@ -100,7 +101,8 @@ func _process(delta: float) -> void:
 
 
 func _setup_buttons() -> void:
-	var buttons := [toggle_btn, perlin_btn, midpoint_btn, grid_down_btn, grid_up_btn, generate_btn, reset_btn, refresh_btn]
+	var buttons := [toggle_btn, perlin_btn, midpoint_btn, grid_down_btn, 
+					grid_up_btn, generate_btn, reset_btn, refresh_btn,simulate_btn]
 	for btn in buttons:
 		if btn:
 			_button_scales[btn] = 1.0
@@ -131,6 +133,8 @@ func _connect_signals() -> void:
 		refresh_btn.pressed.connect(_refresh)
 	if refresh_chk:
 		refresh_chk.toggled.connect(_on_check)
+	if simulate_btn:
+		simulate_btn.pressed.connect(_simulate)
 
 
 func _on_check(checked: bool) -> void:
@@ -186,7 +190,42 @@ func _on_midpoint() -> void:
 func _change_grid_size(direction: int) -> void:
 	GameSettings.terrain_power += direction
 
-
+func _simulate():
+	GameSettings.simulating = true
+	var metricNode:Metrics = get_parent().get_node("MetricController")
+	GameSettings.current_algorithm = GameSettings.Algorithm.MIDPOINT_DISPLACEMENT
+	var midpoint_times:Array[int] = []
+	var midpoint_spaces: Array[float] = []
+	for i in range(1,13):
+		var start_time = Time.get_ticks_msec()
+		var start_mem = OS.get_static_memory_usage()
+		GameSettings.terrain_power = i
+		var end_time = Time.get_ticks_msec()
+		var end_mem = OS.get_static_memory_usage()
+		midpoint_times.append(end_time - start_time)
+		var space_mb = (end_mem - start_mem) / 1024.0 / 1024.0
+		midpoint_spaces.append(round(space_mb * 10.0) / 10.0)
+		#print("Setting terrain_power to ", i, " took ", end_time - start_time, " ms")
+	GameSettings.current_algorithm = GameSettings.Algorithm.PERLIN_NOISE
+	var perlin_times:Array[int] = []
+	var perlin_spaces: Array[float] = []
+	for i in range(1,13):
+		var start_time = Time.get_ticks_msec()
+		var start_mem = OS.get_static_memory_usage()
+		GameSettings.terrain_power = i
+		var end_time = Time.get_ticks_msec()
+		var end_mem = OS.get_static_memory_usage()
+		perlin_times.append(end_time - start_time)
+		var space_mb = (end_mem - start_mem) / 1024.0 / 1024.0
+		perlin_spaces.append(round(space_mb * 10.0) / 10.0)
+		#print("Setting terrain_power to ", i, " took ", end_time - start_time, " ms")
+	metricNode.update_metrics(
+		midpoint_times,perlin_times,
+		midpoint_spaces,perlin_spaces
+	)
+	GameSettings.terrain_power = 7
+	GameSettings.simulating = false
+	
 func _refresh():
 	"""Apply pending terrain data to mesh"""
 	var terrain := get_tree().get_first_node_in_group("terrain")
