@@ -191,24 +191,30 @@ func _change_grid_size(direction: int) -> void:
 	GameSettings.terrain_power += direction
 
 func _simulate():
+	var terrainNode:TerrainController = get_parent().get_parent().get_node("SubViewportContainer").get_node("SubViewport").get_node("Terrain")
+	var temp: bool = GameSettings.auto_refresh
 	GameSettings.simulating = true
+	GameSettings.auto_refresh = false
 	var metricNode:Metrics = get_parent().get_node("MetricController")
 	GameSettings.current_algorithm = GameSettings.Algorithm.MIDPOINT_DISPLACEMENT
 	var midpoint_times:Array[int] = []
-	var midpoint_spaces: Array[float] = []
-	for i in range(1,13):
+	var midpoint_spaces: Array[String] = []
+	var midpoint_fds: Array[String]=[]
+	for i in range(1, 13):
 		var start_time = Time.get_ticks_msec()
 		var start_mem = OS.get_static_memory_usage()
 		GameSettings.terrain_power = i
 		var end_time = Time.get_ticks_msec()
 		var end_mem = OS.get_static_memory_usage()
 		midpoint_times.append(end_time - start_time)
-		var space_mb = (end_mem - start_mem) / 1024.0 / 1024.0
-		midpoint_spaces.append(round(space_mb * 10.0) / 10.0)
+		var space_kb = (end_mem - start_mem) / 1024.0
+		midpoint_spaces.append("%.1f" % space_kb)
+		midpoint_fds.append("%.2f" % terrainNode.calculate_fractal_dimension())
 		#print("Setting terrain_power to ", i, " took ", end_time - start_time, " ms")
 	GameSettings.current_algorithm = GameSettings.Algorithm.PERLIN_NOISE
 	var perlin_times:Array[int] = []
-	var perlin_spaces: Array[float] = []
+	var perlin_spaces: Array[String] = []
+	var perlin_fds: Array[String]=[]
 	for i in range(1,13):
 		var start_time = Time.get_ticks_msec()
 		var start_mem = OS.get_static_memory_usage()
@@ -216,15 +222,18 @@ func _simulate():
 		var end_time = Time.get_ticks_msec()
 		var end_mem = OS.get_static_memory_usage()
 		perlin_times.append(end_time - start_time)
-		var space_mb = (end_mem - start_mem) / 1024.0 / 1024.0
-		perlin_spaces.append(round(space_mb * 10.0) / 10.0)
-		#print("Setting terrain_power to ", i, " took ", end_time - start_time, " ms")
+		var space_kb = (end_mem - start_mem) / 1024.0
+		perlin_spaces.append("%.1f" % space_kb)
+		perlin_fds.append("%.2f" % terrainNode.calculate_fractal_dimension())
+		
 	metricNode.update_metrics(
 		midpoint_times,perlin_times,
-		midpoint_spaces,perlin_spaces
+		midpoint_spaces,perlin_spaces,
+		midpoint_fds,perlin_fds
 	)
 	GameSettings.terrain_power = 7
 	GameSettings.simulating = false
+	GameSettings.auto_refresh = temp
 	
 func _refresh():
 	"""Apply pending terrain data to mesh"""

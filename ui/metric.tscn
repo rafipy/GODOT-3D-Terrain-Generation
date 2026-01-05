@@ -155,13 +155,13 @@ text = "Space (mb)"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM" type="Label" parent="TheGrid/MidpointGrid"]
+[node name="fd" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "PTRM"
+text = "   FD   "
 
 [node name="Grid2" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
@@ -199,7 +199,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM2" type="Label" parent="TheGrid/MidpointGrid"]
+[node name="fd2" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -243,7 +243,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM3" type="Label" parent="TheGrid/MidpointGrid"]
+[node name="fd3" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -287,7 +287,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM4" type="Label" parent="TheGrid/MidpointGrid"]
+[node name="fd4" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -331,7 +331,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM5" type="Label" parent="TheGrid/MidpointGrid"]
+[node name="fd5" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -375,7 +375,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM6" type="Label" parent="TheGrid/MidpointGrid"]
+[node name="fd6" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -419,7 +419,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM7" type="Label" parent="TheGrid/MidpointGrid"]
+[node name="fd7" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -463,7 +463,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM8" type="Label" parent="TheGrid/MidpointGrid"]
+[node name="fd8" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -507,7 +507,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM9" type="Label" parent="TheGrid/MidpointGrid"]
+[node name="fd9" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -551,7 +551,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM10" type="Label" parent="TheGrid/MidpointGrid"]
+[node name="fd10" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -595,7 +595,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM11" type="Label" parent="TheGrid/MidpointGrid"]
+[node name="fd11" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -639,7 +639,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM12" type="Label" parent="TheGrid/MidpointGrid"]
+[node name="fd12" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -683,7 +683,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM13" type="Label" parent="TheGrid/MidpointGrid"]
+[node name="fd13" type="Label" parent="TheGrid/MidpointGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -723,13 +723,13 @@ text = "Space (mb)"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM" type="Label" parent="TheGrid/PerlinGrid"]
+[node name="fd" type="Label" parent="TheGrid/PerlinGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "PTRM"
+text = "   FD   "
 
 [node name="Time2" type="Label" parent="TheGrid/PerlinGrid"]
 layout_mode = 2
@@ -755,7 +755,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM2" type="Label" parent="TheGrid/PerlinGrid"]
+[node name="fd2" type="Label" parent="TheGrid/PerlinGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -787,7 +787,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM3" type="Label" parent="TheGrid/PerlinGrid"]
+[node name="fd3" type="Label" parent="TheGrid/PerlinGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -819,7 +819,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM4" type="Label" parent="TheGrid/PerlinGrid"]
+[node name="fd4" type="Label" parent="TheGrid/PerlinGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -851,7 +851,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM5" type="Label" parent="TheGrid/PerlinGrid"]
+[node name="fd5" type="Label" parent="TheGrid/PerlinGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -883,7 +883,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM6" type="Label" parent="TheGrid/PerlinGrid"]
+[node name="fd6" type="Label" parent="TheGrid/PerlinGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -915,7 +915,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM7" type="Label" parent="TheGrid/PerlinGrid"]
+[node name="fd7" type="Label" parent="TheGrid/PerlinGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -947,7 +947,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM8" type="Label" parent="TheGrid/PerlinGrid"]
+[node name="fd8" type="Label" parent="TheGrid/PerlinGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -979,7 +979,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM9" type="Label" parent="TheGrid/PerlinGrid"]
+[node name="fd9" type="Label" parent="TheGrid/PerlinGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -1011,7 +1011,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM10" type="Label" parent="TheGrid/PerlinGrid"]
+[node name="fd10" type="Label" parent="TheGrid/PerlinGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -1043,7 +1043,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM11" type="Label" parent="TheGrid/PerlinGrid"]
+[node name="fd11" type="Label" parent="TheGrid/PerlinGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -1075,7 +1075,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM12" type="Label" parent="TheGrid/PerlinGrid"]
+[node name="fd12" type="Label" parent="TheGrid/PerlinGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -1107,7 +1107,7 @@ text = "--------"
 modulate = Color(0.4, 0.55, 0.7, 0.4)
 layout_mode = 2
 
-[node name="PTRM13" type="Label" parent="TheGrid/PerlinGrid"]
+[node name="fd13" type="Label" parent="TheGrid/PerlinGrid"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1

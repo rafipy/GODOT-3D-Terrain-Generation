@@ -30,23 +30,23 @@ extends Control
 @onready var midpoint_space_label11: Label = $TheGrid/MidpointGrid/Space12
 @onready var midpoint_space_label12: Label = $TheGrid/MidpointGrid/Space13
 
-@onready var midpoint_ptrm_label1: Label = $TheGrid/MidpointGrid/PTRM2
-@onready var midpoint_ptrm_label2: Label = $TheGrid/MidpointGrid/PTRM3
-@onready var midpoint_ptrm_label3: Label = $TheGrid/MidpointGrid/PTRM4
-@onready var midpoint_ptrm_label4: Label = $TheGrid/MidpointGrid/PTRM5
-@onready var midpoint_ptrm_label5: Label = $TheGrid/MidpointGrid/PTRM6
-@onready var midpoint_ptrm_label6: Label = $TheGrid/MidpointGrid/PTRM7
-@onready var midpoint_ptrm_label7: Label = $TheGrid/MidpointGrid/PTRM8
-@onready var midpoint_ptrm_label8: Label = $TheGrid/MidpointGrid/PTRM9
-@onready var midpoint_ptrm_label9: Label = $TheGrid/MidpointGrid/PTRM10
-@onready var midpoint_ptrm_label10: Label = $TheGrid/MidpointGrid/PTRM11
-@onready var midpoint_ptrm_label11: Label = $TheGrid/MidpointGrid/PTRM12
-@onready var midpoint_ptrm_label12: Label = $TheGrid/MidpointGrid/PTRM13
+@onready var midpoint_fd_label1: Label = $TheGrid/MidpointGrid/fd2
+@onready var midpoint_fd_label2: Label = $TheGrid/MidpointGrid/fd3
+@onready var midpoint_fd_label3: Label = $TheGrid/MidpointGrid/fd4
+@onready var midpoint_fd_label4: Label = $TheGrid/MidpointGrid/fd5
+@onready var midpoint_fd_label5: Label = $TheGrid/MidpointGrid/fd6
+@onready var midpoint_fd_label6: Label = $TheGrid/MidpointGrid/fd7
+@onready var midpoint_fd_label7: Label = $TheGrid/MidpointGrid/fd8
+@onready var midpoint_fd_label8: Label = $TheGrid/MidpointGrid/fd9
+@onready var midpoint_fd_label9: Label = $TheGrid/MidpointGrid/fd10
+@onready var midpoint_fd_label10: Label = $TheGrid/MidpointGrid/fd11
+@onready var midpoint_fd_label11: Label = $TheGrid/MidpointGrid/fd12
+@onready var midpoint_fd_label12: Label = $TheGrid/MidpointGrid/fd13
 
 
 var midpoint_time_labels: Array
 var midpoint_space_labels: Array
-var midpoint_ptrm_labels: Array
+var midpoint_fd_labels: Array
 
 
 @onready var perlin_time_label1: Label = $TheGrid/PerlinGrid/Time2
@@ -75,22 +75,22 @@ var midpoint_ptrm_labels: Array
 @onready var perlin_space_label11: Label = $TheGrid/PerlinGrid/Space12
 @onready var perlin_space_label12: Label = $TheGrid/PerlinGrid/Space13
 
-@onready var perlin_ptrm_label1: Label = $TheGrid/PerlinGrid/PTRM2
-@onready var perlin_ptrm_label2: Label = $TheGrid/PerlinGrid/PTRM3
-@onready var perlin_ptrm_label3: Label = $TheGrid/PerlinGrid/PTRM4
-@onready var perlin_ptrm_label4: Label = $TheGrid/PerlinGrid/PTRM5
-@onready var perlin_ptrm_label5: Label = $TheGrid/PerlinGrid/PTRM6
-@onready var perlin_ptrm_label6: Label = $TheGrid/PerlinGrid/PTRM7
-@onready var perlin_ptrm_label7: Label = $TheGrid/PerlinGrid/PTRM8
-@onready var perlin_ptrm_label8: Label = $TheGrid/PerlinGrid/PTRM9
-@onready var perlin_ptrm_label9: Label = $TheGrid/PerlinGrid/PTRM10
-@onready var perlin_ptrm_label10: Label = $TheGrid/PerlinGrid/PTRM11
-@onready var perlin_ptrm_label11: Label = $TheGrid/PerlinGrid/PTRM12
-@onready var perlin_ptrm_label12: Label = $TheGrid/PerlinGrid/PTRM13
+@onready var perlin_fd_label1: Label = $TheGrid/PerlinGrid/fd2
+@onready var perlin_fd_label2: Label = $TheGrid/PerlinGrid/fd3
+@onready var perlin_fd_label3: Label = $TheGrid/PerlinGrid/fd4
+@onready var perlin_fd_label4: Label = $TheGrid/PerlinGrid/fd5
+@onready var perlin_fd_label5: Label = $TheGrid/PerlinGrid/fd6
+@onready var perlin_fd_label6: Label = $TheGrid/PerlinGrid/fd7
+@onready var perlin_fd_label7: Label = $TheGrid/PerlinGrid/fd8
+@onready var perlin_fd_label8: Label = $TheGrid/PerlinGrid/fd9
+@onready var perlin_fd_label9: Label = $TheGrid/PerlinGrid/fd10
+@onready var perlin_fd_label10: Label = $TheGrid/PerlinGrid/fd11
+@onready var perlin_fd_label11: Label = $TheGrid/PerlinGrid/fd12
+@onready var perlin_fd_label12: Label = $TheGrid/PerlinGrid/fd13
 
 var perlin_time_labels: Array
 var perlin_space_labels: Array
-var perlin_ptrm_labels: Array
+var perlin_fd_labels: Array
 
 
 var _is_visible: bool = false
@@ -124,11 +124,11 @@ func _ready() -> void:
 		midpoint_space_label10, midpoint_space_label11, midpoint_space_label12
 	]
 
-	midpoint_ptrm_labels = [
-		midpoint_ptrm_label1, midpoint_ptrm_label2, midpoint_ptrm_label3, 
-		midpoint_ptrm_label4, midpoint_ptrm_label5, midpoint_ptrm_label6,
-		midpoint_ptrm_label7, midpoint_ptrm_label8, midpoint_ptrm_label9, 
-		midpoint_ptrm_label10, midpoint_ptrm_label11, midpoint_ptrm_label12
+	midpoint_fd_labels = [
+		midpoint_fd_label1, midpoint_fd_label2, midpoint_fd_label3, 
+		midpoint_fd_label4, midpoint_fd_label5, midpoint_fd_label6,
+		midpoint_fd_label7, midpoint_fd_label8, midpoint_fd_label9, 
+		midpoint_fd_label10, midpoint_fd_label11, midpoint_fd_label12
 	]
 	
 	perlin_time_labels = [
@@ -145,11 +145,11 @@ func _ready() -> void:
 		perlin_space_label10, perlin_space_label11, perlin_space_label12
 	]
 
-	perlin_ptrm_labels = [
-		perlin_ptrm_label1, perlin_ptrm_label2, perlin_ptrm_label3, 
-		perlin_ptrm_label4, perlin_ptrm_label5, perlin_ptrm_label6,
-		perlin_ptrm_label7, perlin_ptrm_label8, perlin_ptrm_label9, 
-		perlin_ptrm_label10, perlin_ptrm_label11, perlin_ptrm_label12
+	perlin_fd_labels = [
+		perlin_fd_label1, perlin_fd_label2, perlin_fd_label3, 
+		perlin_fd_label4, perlin_fd_label5, perlin_fd_label6,
+		perlin_fd_label7, perlin_fd_label8, perlin_fd_label9, 
+		perlin_fd_label10, perlin_fd_label11, perlin_fd_label12
 	]
 
 func _on_toggle():
@@ -173,12 +173,16 @@ func _process(delta: float) -> void:
 
 func update_metrics(
 	midpoint_times: Array, perlin_times: Array, 
-	midpoint_spaces: Array, perlin_spaces: Array
+	midpoint_spaces: Array, perlin_spaces: Array,
+	midpoint_fds: Array, perlin_fds: Array
 ):
 	for i in range(12):
 		midpoint_time_labels[i].text = str(midpoint_times[i])
 		perlin_time_labels[i].text = str(perlin_times[i])
 		
-		midpoint_space_labels[i].text = str(midpoint_spaces[i])
-		perlin_space_labels[i].text = str(perlin_spaces[i])
+		midpoint_space_labels[i].text = midpoint_spaces[i]
+		perlin_space_labels[i].text = perlin_spaces[i]
+		
+		midpoint_fd_labels[i].text = midpoint_fds[i]
+		perlin_fd_labels[i].text = perlin_fds[i]
 	

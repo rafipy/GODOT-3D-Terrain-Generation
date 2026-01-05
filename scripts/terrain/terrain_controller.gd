@@ -321,3 +321,102 @@ func flatten_terrain() -> void:
 	mesh_instance.mesh = mesh
 	
 	print("Terrain flattened: %dx%d grid" % [current_grid_size, current_grid_size])
+
+func calculate_fractal_dimension() -> float:
+	var grid_size: int = _pending_grid_size if _pending_grid_size > 0 else GameSettings.get_grid_size()
+	
+	if grid_size < 8:
+		return 2.0
+	
+	var heightmap := _pending_heightmap
+	if heightmap.is_empty():
+		print("Warning: No pending heightmap for fractal calculation")
+		return 2.0
+	
+	var expected_size := grid_size * grid_size
+	if heightmap.size() != expected_size:
+		print("Error: Heightmap size mismatch. Expected: ", expected_size, " Got: ", heightmap.size())
+		return 2.0
+	
+	return _calculate_fd_variogram(heightmap, grid_size)
+
+
+func _calculate_fd_variogram(heightmap: PackedFloat32Array, grid_size: int) -> float:
+	"""Calculate fractal dimension using variogram method - better for blocky terrain"""
+	
+	# Calculate variogram at different lag distances
+	var max_lag := mini(grid_size / 4, 32)
+	var lags := []
+	var variances := []
+	
+	# Use powers of 2 for lag distances
+	var lag := 1
+	while lag <= max_lag:
+		lags.append(lag)
+		lag *= 2
+	
+	for lag_dist in lags:
+		var sum_sq_diff := 0.0
+		var count := 0
+		
+		# Sample in both X and Y directions
+		# Horizontal differences
+		for z in range(grid_size):
+			for x in range(grid_size - lag_dist):
+				var h1 := heightmap[z * grid_size + x]
+				var h2 := heightmap[z * grid_size + x + lag_dist]
+				sum_sq_diff += (h2 - h1) * (h2 - h1)
+				count += 1
+		
+		# Vertical differences
+		for z in range(grid_size - lag_dist):
+			for x in range(grid_size):
+				var h1 := heightmap[z * grid_size + x]
+				var h2 := heightmap[(z + lag_dist) * grid_size + x]
+				sum_sq_diff += (h2 - h1) * (h2 - h1)
+				count += 1
+		
+		if count > 0:
+			var variance := sum_sq_diff / float(count)
+			variances.append(variance)
+	
+	if variances.size() < 3:
+		return 2.0
+	
+	# Convert to log-log scale
+	var log_lags: Array[float] = []
+	var log_vars: Array[float] = []
+	
+	for i in range(lags.size()):
+		if variances[i] > 0.0001:  # Avoid log(0)
+			log_lags.append(log(float(lags[i])))
+			log_vars.append(log(variances[i]))
+	
+	if log_lags.size() < 3:
+		return 2.0
+	
+	# Linear regression
+	var n := log_lags.size()
+	var sum_x := 0.0
+	var sum_y := 0.0
+	var sum_xy := 0.0
+	var sum_x2 := 0.0
+	
+	for i in range(n):
+		sum_x += log_lags[i]
+		sum_y += log_vars[i]
+		sum_xy += log_lags[i] * log_vars[i]
+		sum_x2 += log_lags[i] * log_lags[i]
+	
+	var denominator := n * sum_x2 - sum_x * sum_x
+	if abs(denominator) < 0.001:
+		return 2.0
+	
+	var slope := (n * sum_xy - sum_x * sum_y) / denominator
+	
+	# For variogram: Hurst exponent H = slope/2
+	# Fractal dimension D = 3 - H for surfaces
+	var hurst := slope / 2.0
+	var fd := 3.0 - hurst
+	
+	return clampf(fd, 2.0, 3.0)
