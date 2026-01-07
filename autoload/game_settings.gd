@@ -51,6 +51,24 @@ var perlin_frequency: float = 0.02
 
 var simulating: bool = false
 
+# UI toggle states
+var post_processing_enabled: bool = true:
+	set(value):
+		post_processing_enabled = value
+		settings_changed.emit()
+
+var camera_auto_rotate: bool = true:
+	set(value):
+		camera_auto_rotate = value
+		settings_changed.emit()
+
+# For shortcut customization - store Key enum value
+var spin_toggle_key: Key = KEY_SPACE:
+	set(value):
+		spin_toggle_key = value
+		settings_changed.emit()
+
+
 func _ready() -> void:
 	randomize()
 	terrain_seed = randi()

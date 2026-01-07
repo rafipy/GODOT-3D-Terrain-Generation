@@ -102,7 +102,7 @@ func _process(delta: float) -> void:
 
 func _setup_buttons() -> void:
 	var buttons := [toggle_btn, perlin_btn, midpoint_btn, grid_down_btn, 
-					grid_up_btn, generate_btn, reset_btn, refresh_btn,simulate_btn]
+					grid_up_btn, generate_btn, reset_btn, refresh_btn, simulate_btn]
 	for btn in buttons:
 		if btn:
 			_button_scales[btn] = 1.0

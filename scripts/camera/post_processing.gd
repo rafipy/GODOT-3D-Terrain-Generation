@@ -10,6 +10,10 @@ func _ready() -> void:
 		push_error("PostProcessing must be a child of Camera3D")
 		queue_free()
 		return
+	
+	# Connect to settings and apply initial state
+	GameSettings.settings_changed.connect(_on_settings_changed)
+	_on_settings_changed()
 
 
 func _process(_delta: float) -> void:
@@ -17,3 +21,7 @@ func _process(_delta: float) -> void:
 	# The vertex shader handles the actual full-screen positioning
 	# This just ensures the mesh stays attached
 	pass
+
+
+func _on_settings_changed() -> void:
+	visible = GameSettings.post_processing_enabled

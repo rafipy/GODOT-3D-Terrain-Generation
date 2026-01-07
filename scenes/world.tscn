@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://d18ry0bdurc82"]
+[gd_scene load_steps=15 format=3 uid="uid://d18ry0bdurc82"]
 
 [ext_resource type="Script" uid="uid://c2i64aoch2cqr" path="res://scripts/world.gd" id="1_world"]
 [ext_resource type="PackedScene" uid="uid://dnlfwf7qkdkgn" path="res://ui/control.tscn" id="2_71j4m"]
 [ext_resource type="Script" uid="uid://ctfmy7sdd65u7" path="res://scripts/terrain/terrain_controller.gd" id="2_terrain"]
 [ext_resource type="Script" uid="uid://c3yedgqsb7pau" path="res://scripts/camera/orbit_camera.gd" id="3_camera"]
 [ext_resource type="Shader" uid="uid://c6x5mi8ywmjbf" path="res://shaders/water_toon.gdshader" id="4_water_shader"]
+[ext_resource type="Texture2D" uid="uid://xeggrpxft28l" path="res://assets/skybox/sky_06_2k.png" id="5_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://bcxlwjdg0bqd8" path="res://ui/metric.tscn" id="6_qfnet"]
 [ext_resource type="Script" uid="uid://c0uykmxtc8x8x" path="res://scripts/ui/metrics.gd" id="7_i7141"]
 
@@ -42,17 +43,16 @@ shader_parameter/foam_distortion_amount = 0.1
 shader_parameter/fade_start = 150.0
 shader_parameter/fade_end = 600.0
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1"]
-sky_top_color = Color(0.35, 0.55, 0.85, 1)
-sky_horizon_color = Color(0.65, 0.75, 0.88, 1)
-ground_bottom_color = Color(0.15, 0.2, 0.25, 1)
-ground_horizon_color = Color(0.65, 0.75, 0.88, 1)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7r4gi"]
+panorama = ExtResource("5_4mrxx")
+filter = false
 
 [sub_resource type="Sky" id="Sky_1"]
-sky_material = SubResource("ProceduralSkyMaterial_1")
+sky_material = SubResource("PanoramaSkyMaterial_7r4gi")
 
 [sub_resource type="Environment" id="Environment_1"]
 background_mode = 2
+background_energy_multiplier = 0.66
 sky = SubResource("Sky_1")
 ambient_light_source = 3
 ambient_light_color = Color(0.6, 0.65, 0.7, 1)
@@ -120,6 +120,22 @@ environment = SubResource("Environment_1")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 10
+
+[node name="PostFXCheckBox" type="CheckBox" parent="CanvasLayer"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 47.0
+button_pressed = true
+text = "Post FX"
+
+[node name="SpinCheckBox" type="CheckBox" parent="CanvasLayer"]
+offset_left = 16.0
+offset_top = 56.0
+offset_right = 112.0
+offset_bottom = 87.0
+button_pressed = true
+text = "Spin"
 
 [node name="UIController" parent="CanvasLayer" instance=ExtResource("2_71j4m")]
 

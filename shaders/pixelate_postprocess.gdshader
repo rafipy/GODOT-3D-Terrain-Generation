@@ -1,6 +1,5 @@
 // Pixelate Post-Processing Shader - Godot 4.5
-// Based on Godot docs advanced post-processing and CBerry22's 3D Pixel Art technique
-// https://docs.godotengine.org/en/stable/tutorials/shaders/advanced_postprocessing.html
+
 
 shader_type spatial;
 render_mode unshaded, cull_disabled;

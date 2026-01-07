@@ -7,12 +7,16 @@ extends Node3D
 @onready var water: MeshInstance3D = $SubViewportContainer/SubViewport/Water
 @onready var sun: DirectionalLight3D = $SubViewportContainer/SubViewport/DirectionalLight3D
 @onready var ui_controller: Control = $CanvasLayer/UIController
+@onready var viewport_container: SubViewportContainer = $SubViewportContainer
+@onready var post_fx_checkbox: CheckBox = $CanvasLayer/PostFXCheckBox
+@onready var spin_checkbox: CheckBox = $CanvasLayer/SpinCheckBox
 
 
 func _ready() -> void:
 	_setup_water()
 	_connect_signals()
 	_connect_ui_signals()
+	_connect_checkbox_signals()
 	
 	# Initial generation
 	terrain.generate_terrain()
@@ -43,6 +47,13 @@ func _connect_ui_signals() -> void:
 	ui_controller.set_seed(GameSettings.terrain_seed)
 
 
+func _connect_checkbox_signals() -> void:
+	if post_fx_checkbox:
+		post_fx_checkbox.toggled.connect(_on_post_fx_toggled)
+	if spin_checkbox:
+		spin_checkbox.toggled.connect(_on_spin_toggled)
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		var key := event as InputEventKey
@@ -53,8 +64,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				ui_controller.set_seed(GameSettings.terrain_seed)
 				_print_settings()
 			KEY_SPACE:
-				# Toggle camera auto-rotate
-				camera.toggle_auto_rotate()
+				# Toggle camera auto-rotate (handled via GameSettings now)
+				GameSettings.camera_auto_rotate = not GameSettings.camera_auto_rotate
 			KEY_EQUAL, KEY_KP_ADD:
 				# Scale up
 				GameSettings.terrain_scale = minf(GameSettings.terrain_scale + 0.1, 5.0)
@@ -121,8 +132,9 @@ func _on_terrain_generated(time_ms: float) -> void:
 
 
 func _on_settings_changed() -> void:
-	# Could trigger regeneration or update display
-	pass
+	# Update post-processing stretch_shrink based on toggle
+	if viewport_container:
+		viewport_container.stretch_shrink = 4 if GameSettings.post_processing_enabled else 1
 
 
 func _on_seed_changed(_new_seed: int) -> void:
@@ -155,3 +167,11 @@ func _on_ui_generate() -> void:
 func _on_ui_flatten() -> void:
 	terrain.flatten_terrain()
 	print("Terrain flattened")
+
+
+func _on_post_fx_toggled(enabled: bool) -> void:
+	GameSettings.post_processing_enabled = enabled
+
+
+func _on_spin_toggled(enabled: bool) -> void:
+	GameSettings.camera_auto_rotate = enabled

@@ -21,6 +21,9 @@ var _is_dragging: bool = false
 
 
 func _ready() -> void:
+	# Connect to GameSettings for auto_rotate state
+	GameSettings.settings_changed.connect(_on_settings_changed)
+	_on_settings_changed()
 	_update_camera_position()
 
 
@@ -32,6 +35,13 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	# Handle configurable shortcut for toggling spin
+	if event is InputEventKey and event.pressed:
+		var key_event := event as InputEventKey
+		if key_event.keycode == GameSettings.spin_toggle_key:
+			GameSettings.camera_auto_rotate = not GameSettings.camera_auto_rotate
+			return
+	
 	# Mouse drag for manual orbit
 	if event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton
@@ -78,3 +88,7 @@ func set_orbit_angle(angle: float) -> void:
 
 func toggle_auto_rotate() -> void:
 	auto_rotate = not auto_rotate
+
+
+func _on_settings_changed() -> void:
+	auto_rotate = GameSettings.camera_auto_rotate
