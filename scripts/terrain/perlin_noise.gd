@@ -55,7 +55,6 @@ func _generate_impl() -> void:
 			# Normalize raw noise to [0, 1] based on actual range
 			var normalized := (raw - min_raw) / (max_raw - min_raw)
 			
-			# Shift down so ~20% is underwater (below 0)
 			# Map [0, 1] to [-0.2, 1.0]
 			var height := normalized * 1.2 - 0.2
 			
@@ -64,10 +63,10 @@ func _generate_impl() -> void:
 			
 			set_height(x, y, height)
 	
-	print("Perlin height range: [%.3f, %.3f] (world Y: [%.1f, %.1f])" % [
-		min_height, max_height,
-		min_height * 25.0 * 1.5, max_height * 25.0 * 1.5
-	])
+	#print("Perlin height range: [%.3f, %.3f] (world Y: [%.1f, %.1f])" % [
+		#min_height, max_height,
+		#min_height * 25.0 * 1.5, max_height * 25.0 * 1.5
+	#])
 
 
 func get_algorithm_name() -> String:

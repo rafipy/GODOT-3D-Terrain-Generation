@@ -149,7 +149,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "Space (mb)"
+text = "Space (kb)"
 
 [node name="Sep5" type="VSeparator" parent="TheGrid/MidpointGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
@@ -717,7 +717,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 0.9)
 theme_override_font_sizes/font_size = 11
-text = "Space (mb)"
+text = "Space (kb)"
 
 [node name="Sep5" type="VSeparator" parent="TheGrid/PerlinGrid"]
 modulate = Color(0.4, 0.55, 0.7, 0.4)
