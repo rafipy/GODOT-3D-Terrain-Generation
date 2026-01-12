@@ -33,14 +33,15 @@ corner_radius_bottom_left = 4
 
 [node name="Metrics" type="Control"]
 layout_mode = 3
-anchors_preset = 15
+anchors_preset = 11
+anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 837.0
-offset_top = -1.0
-offset_right = -1.0
-offset_bottom = -393.0
-grow_horizontal = 2
+offset_left = -450.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 267.0
+grow_horizontal = 0
 grow_vertical = 2
 
 [node name="Background" type="PanelContainer" parent="."]
@@ -48,12 +49,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 22.0
-offset_top = -1.0
-offset_bottom = -9.0
+offset_left = 0.0
+offset_top = 0.0
+offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_h03w5")
+visible = false
 
 [node name="ToggleButton" type="Button" parent="."]
 layout_mode = 1
@@ -77,11 +79,12 @@ text = "^  Metrics  ^"
 
 [node name="TheGrid" type="GridContainer" parent="."]
 layout_mode = 0
-offset_left = 45.0
+offset_left = 30.0
 offset_top = 11.0
-offset_right = 440.0
+offset_right = 425.0
 offset_bottom = 267.0
 columns = 3
+hidden_behavior = 1
 
 [node name="MidPoint" type="Label" parent="TheGrid"]
 layout_mode = 2

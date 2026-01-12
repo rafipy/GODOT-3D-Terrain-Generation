@@ -41,27 +41,10 @@ enum MeshStyle { SMOOTH, BLOCKS }
 			_generator.roughness = value
 			generate_terrain()
 
-@export_group("Island Mask")
-@export_range(0.0, 1.0, 0.01) var island_inner_radius: float = 0.4:
-	set(value):
-		island_inner_radius = value
-		GameSettings.island_inner_radius = value
-		if is_node_ready() and _island_mask:
-			_island_mask.inner_radius = value
-			generate_terrain()
-
-@export_range(0.0, 1.0, 0.01) var island_outer_radius: float = 0.85:
-	set(value):
-		island_outer_radius = value
-		GameSettings.island_outer_radius = value
-		if is_node_ready() and _island_mask:
-			_island_mask.outer_radius = value
-			generate_terrain()
 
 @onready var mesh_instance: MeshInstance3D = $MeshInstance3D
 
 var _generator: BaseTerrainGenerator
-var _island_mask: IslandMask
 var _smooth_mesh_builder: TerrainMeshBuilder
 var _block_mesh_builder: BlockMeshBuilder
 var _current_heightmap: PackedFloat32Array
@@ -86,7 +69,6 @@ func force_generate():
 func _on_settings_changed() -> void:
 	set_algorithm()
 	
-	# Always generate data in background, but only update mesh if auto_refresh is on
 	generate_terrain(GameSettings.auto_refresh)
 
 	
@@ -94,10 +76,7 @@ func _setup_components() -> void:
 	_generator = MidpointDisplacement.new()
 	_generator.roughness = GameSettings.md_roughness
 	
-	_island_mask = IslandMask.new()
-	_island_mask.inner_radius = GameSettings.island_inner_radius
-	_island_mask.outer_radius = GameSettings.island_outer_radius
-	
+
 	_smooth_mesh_builder = TerrainMeshBuilder.new()
 	_smooth_mesh_builder.height_scale = GameSettings.height_scale
 	_smooth_mesh_builder.terrain_scale = GameSettings.terrain_scale
@@ -106,7 +85,6 @@ func _setup_components() -> void:
 	_block_mesh_builder.height_scale = GameSettings.height_scale
 	_block_mesh_builder.terrain_scale = GameSettings.terrain_scale
 	
-	# Create MeshInstance if not present
 	if not mesh_instance:
 		mesh_instance = MeshInstance3D.new()
 		mesh_instance.name = "MeshInstance3D"
@@ -118,29 +96,20 @@ func generate_terrain(update_mesh: bool = true) -> void:
 	var current_grid_size := GameSettings.get_grid_size()
 	var seed_value := GameSettings.terrain_seed
 	
-	# Update generator settings
 	if _generator is MidpointDisplacement:
 		_generator.roughness = GameSettings.md_roughness
 	
-	# Generate base heightmap
 	var start_time := Time.get_ticks_msec()
 	var raw_heightmap := _generator.generate(current_grid_size, seed_value)
 	
-	# Apply island mask ONLY to Midpoint Displacement
-	var generated_heightmap: PackedFloat32Array
-	if _generator is MidpointDisplacement:
-		generated_heightmap = _island_mask.apply(raw_heightmap, current_grid_size)
-	else:
-		generated_heightmap = raw_heightmap
+	var generated_heightmap: PackedFloat32Array = raw_heightmap
 	
 	var elapsed := Time.get_ticks_msec() - start_time
 	
 	if update_mesh:
-		# Apply immediately to mesh
 		_current_heightmap = generated_heightmap
 		_apply_heightmap_to_mesh(current_grid_size, elapsed)
 	else:
-		# Store for later application
 		_pending_heightmap = generated_heightmap
 		_pending_grid_size = current_grid_size
 		if !GameSettings.simulating:

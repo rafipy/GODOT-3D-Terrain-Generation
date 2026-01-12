@@ -99,16 +99,13 @@ var _hidden_x: float = 0.0
 var _shown_x: float = 0.0
 var animation_speed: float = 6.0
 
+
 func _ready() -> void:
-	_shown_x = 843
-	_hidden_x = panel.size.x + 813
-	
-	_is_visible = false
-	_target_x = _hidden_x
-	panel.position.x = _hidden_x
-	
 	if toggle_btn:
 		toggle_btn.pressed.connect(_on_toggle)
+	
+	get_tree().root.size_changed.connect(_on_viewport_resize)
+	call_deferred("_deferred_ready")
 	
 	midpoint_time_labels = [
 		midpoint_time_label1, midpoint_time_label2, midpoint_time_label3, 
@@ -154,12 +151,19 @@ func _ready() -> void:
 
 func _on_toggle():
 	_is_visible = not _is_visible
+	_apply_visibility_state()
+
+func _apply_visibility_state() -> void:
 	if _is_visible:
 		_target_x = _shown_x
 		toggle_btn.text = "v  Hide  v"
+		$TheGrid.visible = true
+		$Background.visible = true
 	else:
 		_target_x = _hidden_x
-		toggle_btn.text = "^  Menu  ^"
+		toggle_btn.text = "^  Stats  ^"
+		$TheGrid.visible = false
+		$Background.visible = false
 
 func _process(delta: float) -> void:
 	# Smooth panel slide with easing
@@ -169,7 +173,6 @@ func _process(delta: float) -> void:
 		panel.position.x += diff * t * (2.0 - t)
 	else:
 		panel.position.x = _target_x
-	
 
 func update_metrics(
 	midpoint_times: Array, perlin_times: Array, 
@@ -185,4 +188,30 @@ func update_metrics(
 		
 		midpoint_fd_labels[i].text = midpoint_fds[i]
 		perlin_fd_labels[i].text = perlin_fds[i]
+
+func _on_viewport_resize() -> void:
+	_recalculate_positions()
+
+func _deferred_ready() -> void:
+	_recalculate_positions()
+	panel.position.x = _hidden_x
+	_is_visible = false
+	_apply_visibility_state()
+
+func _recalculate_positions() -> void:
+	var viewport_width = get_viewport().get_visible_rect().size.x
+	var panel_width = panel.size.x
+	
+	# Like the main menu: when hidden, leave only the toggle handle visible.
+	# Toggle button is rotated, so use its *height* as the visible thickness.
+	var handle_thickness := toggle_btn.size.y if toggle_btn else 28.0
+	
+	# When shown, dock flush to the right but keep the handle thickness outside,
+	# so the visible edge aligns (avoids the "poking out" look).
+	_shown_x = viewport_width - panel_width + handle_thickness
+	
+	# When hidden, keep only the handle visible.
+	_hidden_x = viewport_width - handle_thickness
+	
+	_apply_visibility_state()
 	
